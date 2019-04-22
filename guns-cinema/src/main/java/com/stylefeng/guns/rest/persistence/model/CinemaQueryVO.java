@@ -12,25 +12,15 @@ public class CinemaQueryVO implements Serializable {
     int status;
     int nowPage;
     int totalPage;
-    String msg;
     HashMap<String,Object> data;
     public CinemaQueryVO() {
     }
 
-    public CinemaQueryVO(int status, int nowPage, int totalPage, String msg, HashMap<String, Object> data) {
+    public CinemaQueryVO(int status, int nowPage, int totalPage, HashMap<String, Object> data) {
         this.status = status;
         this.nowPage = nowPage;
         this.totalPage = totalPage;
-        this.msg = msg;
         this.data = data;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 
     public int getStatus() {
