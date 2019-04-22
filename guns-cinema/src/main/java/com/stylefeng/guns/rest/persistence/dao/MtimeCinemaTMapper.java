@@ -2,6 +2,10 @@ package com.stylefeng.guns.rest.persistence.dao;
 
 import com.stylefeng.guns.rest.persistence.model.MtimeCinemaT;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +15,9 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @author Gavin
  * @since 2019-04-21
  */
+@Mapper
 public interface MtimeCinemaTMapper extends BaseMapper<MtimeCinemaT> {
+
+    List<MtimeCinemaT> selectCinemasByBrandAndHallTypeAndDistrictId(@Param("brandId") String brandId, @Param("hallType")String hallType, @Param("districtId") String districtId);
 
 }

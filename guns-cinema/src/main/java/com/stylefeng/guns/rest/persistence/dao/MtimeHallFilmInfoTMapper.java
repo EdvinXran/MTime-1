@@ -1,6 +1,5 @@
 package com.stylefeng.guns.rest.persistence.dao;
 
-import com.stylefeng.guns.rest.persistence.model.MtimeHallFilmInfoT;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**

@@ -14,5 +14,11 @@
         <result column="cinema_address" property="cinemaAddress" />
         <result column="minimum_price" property="minimumPrice" />
     </resultMap>
-
+    
+    <select id="selectCinemasByBrandAndHallTypeAndDistrictId" resultMap="BaseResultMap">
+      <bind name="pattern" value="'%' + _parameter.hallType + '%'"/>
+        select * from mtime_cinema_t
+        where brand_id = #{brandId} and hall_ids like #{pattern}  and area_id = #{districtId}
+    </select>
+    
 </mapper>
