@@ -47,10 +47,22 @@
             <version>2.0.0</version>
         </dependency>
         <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.9</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
             <groupId>com.stylefeng.guns</groupId>
             <artifactId>guns-api</artifactId>
             <version>0.0.1</version>
         </dependency>
+
 
     </dependencies>
 

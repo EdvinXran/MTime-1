@@ -1,12 +1,14 @@
 package com.stylefeng.guns.rest.persistence.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by Gavin
  * on 2019/4/21 21:42
  */
-public class CinemaQueryVO {
+//java.lang.IllegalStateException: Serialized class com.stylefeng.guns.rest.persistence.model.CinemaQueryVO must implement java.io.Serializable
+public class CinemaQueryVO implements Serializable {
     int status;
     int nowPage;
     int totalPage;

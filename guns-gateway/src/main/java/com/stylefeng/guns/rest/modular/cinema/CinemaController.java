@@ -1,8 +1,9 @@
 package com.stylefeng.guns.rest.modular.cinema;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.stylefeng.guns.rest.modular.vo.CinemaRequestVO;
 import com.stylefeng.guns.rest.persistence.model.CinemaQueryVO;
 import com.stylefeng.guns.rest.service.CinemaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/cinema")
 public class CinemaController {
-    @Autowired
+    @Reference
     CinemaService cinemaService;
 
     @RequestMapping("/getCinemas")
-    public CinemaQueryVO getCinemas(String brandId, String hallType, String districtId) {
-        CinemaQueryVO cinemaQueryVO = cinemaService.queryCinemasByConditions(brandId, hallType, districtId);
+    public CinemaQueryVO getCinemas(CinemaRequestVO cinemaRequestVO) {
+        CinemaQueryVO cinemaQueryVO = cinemaService.queryCinemasByConditions(cinemaRequestVO.getBrandId(), cinemaRequestVO.getHallType(),cinemaRequestVO.getDistrictId() );
         return cinemaQueryVO;
     }
 }

@@ -2,7 +2,6 @@ package com.stylefeng.guns.rest.persistence.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.stylefeng.guns.rest.persistence.dao.MtimeCinemaTMapper;
-import com.stylefeng.guns.rest.persistence.model.CinemaBO;
 import com.stylefeng.guns.rest.persistence.model.CinemaQueryVO;
 import com.stylefeng.guns.rest.persistence.model.MtimeCinemaT;
 import com.stylefeng.guns.rest.service.CinemaService;
@@ -24,9 +23,9 @@ public class CinemaServiceImpl implements CinemaService{
     MtimeCinemaTMapper mtimeCinemaTMapper;
 
     @Override
-    public CinemaQueryVO queryCinemasByConditions(CinemaBO cinemaBO) {
+    public CinemaQueryVO queryCinemasByConditions(String brandId, String hallType, String districtId) {
         CinemaQueryVO cinemaQueryVO = new CinemaQueryVO();
-        List<MtimeCinemaT> cinemas =  mtimeCinemaTMapper.selectCinemasByBrandAndHallTypeAndDistrictId(cinemaBO.getBrandId(),cinemaBO.getBrandId(),cinemaBO.getHallType());
+        List<MtimeCinemaT> cinemas =  mtimeCinemaTMapper.selectCinemasByBrandAndHallTypeAndDistrictId(brandId, hallType, districtId);
         if(cinemas.size()!=0){
             cinemaQueryVO.setStatus(0);
             cinemaQueryVO.setNowPage(1);
@@ -39,5 +38,6 @@ public class CinemaServiceImpl implements CinemaService{
             cinemaQueryVO.setMsg("影院信息查询失败");
         }
         return cinemaQueryVO;
+
     }
 }

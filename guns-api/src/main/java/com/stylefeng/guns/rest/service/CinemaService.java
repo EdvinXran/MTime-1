@@ -1,6 +1,5 @@
 package com.stylefeng.guns.rest.service;
 
-import com.stylefeng.guns.rest.persistence.model.CinemaBO;
 import com.stylefeng.guns.rest.persistence.model.CinemaQueryVO;
 
 /**
@@ -8,5 +7,5 @@ import com.stylefeng.guns.rest.persistence.model.CinemaQueryVO;
  * on 2019/4/22 17:39
  */
 public interface CinemaService {
-    CinemaQueryVO queryCinemasByConditions(CinemaBO cinemaBO);
+    CinemaQueryVO queryCinemasByConditions(String brandId, String hallType, String districtId);
 }

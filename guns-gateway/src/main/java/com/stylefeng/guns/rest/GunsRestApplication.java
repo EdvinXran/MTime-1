@@ -10,5 +10,6 @@ public class GunsRestApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GunsRestApplication.class, args);
+
     }
 }

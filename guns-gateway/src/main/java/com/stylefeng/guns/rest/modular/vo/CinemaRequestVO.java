@@ -1,18 +1,18 @@
-package com.stylefeng.guns.rest.persistence.model;
+package com.stylefeng.guns.rest.modular.vo;
 
 /**
  * Created by Gavin
- * on 2019/4/22 18:05
+ * on 2019/4/22 21:01
  */
-public class CinemaBO {
+public class CinemaRequestVO {
     String brandId;
     String hallType;
     String districtId;
 
-    public CinemaBO() {
+    public CinemaRequestVO() {
     }
 
-    public CinemaBO(String brandId, String hallType, String districtId) {
+    public CinemaRequestVO(String brandId, String hallType, String districtId) {
         this.brandId = brandId;
         this.hallType = hallType;
         this.districtId = districtId;
