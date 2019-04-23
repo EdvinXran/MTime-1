@@ -58,7 +58,6 @@
             <type>pom</type>
         </dependency>
 
-
         <!--api-->
         <dependency>
             <groupId>com.stylefeng.guns</groupId>

@@ -21,12 +21,5 @@ public class CinemaMapperTest {
 
     @Autowired
     MtimeCinemaTMapper cinemaTMapper;
-    @Test
-    public void myTest1(){
-        List<MtimeCinemaT> list = cinemaTMapper.selectCinemasByBrandAndHallTypeAndDistrictId("1", "1", "1");
-        for (MtimeCinemaT mtimeCinemaT : list) {
-            System.out.println("mtimeCinemaT = " + mtimeCinemaT);
-        }
-    }
 
 }
