@@ -1,9 +1,8 @@
 package com.stylefeng.guns.rest.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.stylefeng.guns.rest.modular.auth.controller.dto.AuthResponse;
 import com.stylefeng.guns.rest.modular.auth.util.JwtTokenUtil;
-import com.stylefeng.guns.rest.persistence.dao.UserMapper;
+import com.stylefeng.guns.rest.persistence.dao.MyUserMapper;
 import com.stylefeng.guns.rest.persistence.model.UserBo;
 import com.stylefeng.guns.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    UserMapper userMapper;
+    MyUserMapper userMapper;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;

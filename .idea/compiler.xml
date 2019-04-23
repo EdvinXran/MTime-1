@@ -32,6 +32,7 @@
       <module name="guns-pay" target="1.8" />
       <module name="guns-rest" target="1.8" />
       <module name="guns-user" target="1.8" />
+      <module name="MTime" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
