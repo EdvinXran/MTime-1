@@ -1,3 +1,4 @@
+/*
 package com.stylefeng.guns.rest.modular.user;
 
 
@@ -91,3 +92,4 @@ public class UserController {
     }
 }
 
+*/

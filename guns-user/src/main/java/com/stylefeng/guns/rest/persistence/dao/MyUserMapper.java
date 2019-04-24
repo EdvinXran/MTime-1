@@ -1,7 +1,7 @@
 package com.stylefeng.guns.rest.persistence.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.stylefeng.guns.rest.persistence.model.User;
+import com.stylefeng.guns.rest.persistence.model.MyUser;
 import com.stylefeng.guns.rest.persistence.model.UserBo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Select;
  * @since 2019-04-22
  */
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface MyUserMapper extends BaseMapper<MyUser> {
 
     @Insert("insert into user(user_name,user_pwd,email,user_phone,address) values(#{username},#{password},#{email},#{phone},#{address})")
     public int register(UserBo userBo) throws Exception;
