@@ -1,7 +1,7 @@
 package com.stylefeng.guns.rest.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.stylefeng.guns.rest.model.*;
+import com.stylefeng.guns.rest.persistence.model.*;
 import com.stylefeng.guns.rest.persistence.dao.*;
 import com.stylefeng.guns.rest.persistence.model.*;
 import com.stylefeng.guns.rest.service.FilmAPIService;

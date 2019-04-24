@@ -1,9 +1,10 @@
 package com.stylefeng.guns.rest.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.stylefeng.guns.rest.model.*;
+
 import com.stylefeng.guns.rest.service.FilmAPIService;
- import org.springframework.web.bind.annotation.RequestMapping;
+import com.stylefeng.guns.rest.persistence.model.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,11 +42,5 @@ public class FilmHomeController {
         }
     }
 
-    //3、影片查询接口
-    @RequestMapping("/getFilms")
-    public Object getFilms(FilmsGetVo filmsGetVo){
-        FilmsVo filmsVo = filmAPIService.findFilms(filmsGetVo);
-        return null;
-    }
 
 }

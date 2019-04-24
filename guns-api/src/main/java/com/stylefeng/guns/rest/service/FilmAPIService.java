@@ -1,7 +1,7 @@
 package com.stylefeng.guns.rest.service;
 
 
-import com.stylefeng.guns.rest.model.*;
+import com.stylefeng.guns.rest.persistence.model.*;
 
 import java.util.List;
 

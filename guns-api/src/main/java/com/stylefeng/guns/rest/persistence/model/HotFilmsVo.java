@@ -1,4 +1,4 @@
-package com.stylefeng.guns.rest.model;
+package com.stylefeng.guns.rest.persistence.model;
 
 import java.io.Serializable;
 import java.util.List;
