@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -91,4 +90,33 @@ public class CinemaController {
         cinemaConditionResponseVO.setData(responseMap);
         return JSONObject.toJSONString(cinemaConditionResponseVO);
     }
-}
+
+    @RequestMapping(value = "/getFields",method = RequestMethod.GET)
+    public String getFields(Integer cinemaId){
+
+
+            CinemaInfoVO cinemaInfoById = cinemaService.getCinemaInfoById(cinemaId);
+            List<FilmInfoVO> filmInfoByCinemaId = cinemaService.getFilmInfoByCinemaId(cinemaId);
+
+            CinemaConditionVO cinemaConditionVO = new CinemaConditionVO();
+            cinemaConditionVO.setCinemaInfo(cinemaInfoById);
+            cinemaConditionVO.setFilmList(filmInfoByCinemaId);
+            return JSONObject.toJSONString(cinemaConditionVO);
+
+
+    }
+    @RequestMapping(value = "/getFieldInfo",method = RequestMethod.POST)
+    public String getFieldInfo(Integer cinemaId, Integer fieldId) {
+
+        CinemaInfoVO cinemaInfoById = cinemaService.getCinemaInfoById(cinemaId);
+        FilmInfoVO filmInfoByFieldId = cinemaService.getFilmInfoByFieldId(fieldId);
+        HallInfoVO filmFieldInfo = cinemaService.getFilmFieldInfo(fieldId);
+        filmFieldInfo.setSoldSeats("1");
+
+        CinemaQueryVO cinemaQueryVO = new CinemaQueryVO();
+        cinemaQueryVO.setCinemaInfo(cinemaInfoById);
+        cinemaQueryVO.setFilmInfo(filmInfoByFieldId);
+        cinemaQueryVO.setHallInfo(filmFieldInfo);
+        return JSONObject.toJSONString(cinemaQueryVO);
+    }
+    }

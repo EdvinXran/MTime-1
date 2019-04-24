@@ -74,4 +74,15 @@ public class CinemaQueryVO implements Serializable {
                 ", nowPage=" + nowPage +
                 '}';
     }
+
+    public void setCinemaInfo(CinemaInfoVO cinemaInfoById) {
+    }
+
+    public void setFilmInfo(FilmInfoVO filmInfoByFieldId) {
+
+    }
+
+    public void setHallInfo(HallInfoVO filmFieldInfo) {
+
+    }
 }

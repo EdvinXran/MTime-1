@@ -2,6 +2,7 @@ package com.stylefeng.guns.rest.persistence.dao;
 
 import com.stylefeng.guns.rest.persistence.model.MtimeAreaDictT;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @author Gavin
  * @since 2019-04-23
  */
+
 public interface MtimeAreaDictTMapper extends BaseMapper<MtimeAreaDictT> {
 
 }

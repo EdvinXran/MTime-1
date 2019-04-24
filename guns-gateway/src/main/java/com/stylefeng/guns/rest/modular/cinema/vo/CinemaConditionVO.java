@@ -3,6 +3,7 @@ package com.stylefeng.guns.rest.modular.cinema.vo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Gavin
@@ -21,5 +22,14 @@ public class CinemaConditionVO implements Serializable {
         this.brandId = brandId;
         this.hallType = hallType;
         this.districtId = districtId;
+    }
+
+
+    public void setCinemaInfo(CinemaInfoVO cinemaInfoById) {
+
+    }
+
+    public void setFilmList(List<FilmInfoVO> filmInfoByCinemaId) {
+
     }
 }

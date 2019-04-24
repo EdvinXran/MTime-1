@@ -157,44 +157,45 @@ public class CinemaServiceImpl implements CinemaServiceAPI{
 //根据影院编号，获取影院信息
     @Override
     public CinemaInfoVO getCinemaInfoById(int cinemaId) {
-        
         MtimeCinemaT mtimeCinemaT = mtimeCinemaTMapper.selectById(cinemaId);
-       
         CinemaInfoVO cinemaInfoVO = new CinemaInfoVO();
-        
         cinemaInfoVO.setCinemaAddress(mtimeCinemaT.getAddress());
-       
         cinemaInfoVO.setImgUrl(mtimeCinemaT.getImgAddress());
-       
         cinemaInfoVO.setCinemaPhone(mtimeCinemaT.getCinemaPhone());
-        
         cinemaInfoVO.setCinemaName(mtimeCinemaT.getCinemaName());
-       
         cinemaInfoVO.setCinemaId(mtimeCinemaT.getUuid()+"");
 
         return cinemaInfoVO;
     }
+//获取所有电影的信息和对应的放映场次信息，根据影院编号
+    @Override
+    public List<FilmInfoVO> getFilmInfoByCinemaId(int cinemaId) {
+        List<FilmInfoVO> filmInfos = mtimeFieldTMapper.getFilmInfos(cinemaId);
+
+        return filmInfos;
+    }
 //根据放映场次ID获取放映信息
     @Override
     public HallInfoVO getFilmFieldInfo(int fieldId) {
-     
+
         HallInfoVO hallInfoVO = mtimeFieldTMapper.getHallInfo(fieldId);
 
         return hallInfoVO;
+
     }
 //根据放映场次查询播放的电影编号，然后根据电影编号获取对应的电影信息
     @Override
     public FilmInfoVO getFilmInfoByFieldId(int fieldId) {
-       
+
         FilmInfoVO filmInfoVO = mtimeFieldTMapper.getFilmInfoById(fieldId);
 
         return filmInfoVO;
     }
-    
+
     //获取所有电影的信息和对应的放映场次信息，根据影院编号
     @Override
     public List<FilmInfoVO> getFilmInfoByCinemaId(int cinemaId) {
-       
+
         List<FilmInfoVO> filmInfos = mtimeFieldTMapper.getFilmInfos(cinemaId);
 
         return filmInfos;
