@@ -8,7 +8,7 @@ import com.stylefeng.guns.rest.service.FilmAPIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,13 @@ public class FilmAPIServiceImpl implements FilmAPIService {
     MtimeYearDictTMapper mtimeYearDictTMapper;
     @Autowired
     MtimeSourceDictTMapper mtimeSourceDictTMapper;
-
+    @Autowired
+    MtimeFilmInfoTMapper mtimeFilmInfoTMapper;
+    @Autowired
+    MtimeActorTMapper mtimeActorTMapper;
+    @Autowired
+    MtimeFilmActorTMapper mtimeFilmActorTMapper;
+    
     //首页显示横栏
     @Override
     public List<MtimeBanner> selectAllBanner() {
@@ -237,7 +243,7 @@ public class FilmAPIServiceImpl implements FilmAPIService {
 
 
     //3、影片查询接口
-   /* @Override
+    @Override
     public FilmsVo findFilms(FilmsGetVo filmsGetVo) {
         int showType = filmsGetVo.getShowType();
         int sortId = filmsGetVo.getSortId();
@@ -245,17 +251,153 @@ public class FilmAPIServiceImpl implements FilmAPIService {
         int sourceId = filmsGetVo.getSourceId();
         int yearId = filmsGetVo.getYearId();
         int nowPage = filmsGetVo.getNowPage();
-        filmsGetVo
+        int pageSize = filmsGetVo.getPageSizel();
+        FilmsVo filmsVo = new FilmsVo();
         if (showType == 0){
             showType =1;
+        }if (sortId == 0){
+            sortId =1;
+        }if (catId == 0){
+            catId = 99;
+        }if (sourceId == 0){
+            sourceId = 99;
+        }if (yearId == 0){
+            yearId = 99;
+        }if (nowPage == 0){
+            nowPage = 1;
+        }if (pageSize == 0){
+            pageSize = 18;
         }
 
         //======================================
-        if (showType == 1 ){
+        List<FilmVo> mtimeFilmList = null;
+       // if (showType == 1 ){
             if (sortId == 1){
+                mtimeFilmList =  mtimeFilmTMapper.selectHotFilmByShowType(showType,((nowPage -1)*pageSize),pageSize);
+            }
+            if (sortId == 2){
+                mtimeFilmList =  mtimeFilmTMapper.selectHotFilmByTime(showType,((nowPage -1)*pageSize),pageSize);
+            }
+            if (sortId == 3){
+                mtimeFilmList =  mtimeFilmTMapper.selectHotFilmByScore(showType,((nowPage -1)*pageSize),pageSize);
+            }
+      //  }
 
+        if (catId != 99){
+            for (FilmVo mtimeFilm : mtimeFilmList) {
+                String[] split = mtimeFilm.getFilmCats().split("#");
+                int fale = 0;
+                for (String s : split) {
+                    if (catId == Integer.parseInt(s)){
+                        fale = 1;
+                    }
+                }
+                if (fale == 0){
+                    mtimeFilmList.remove(mtimeFilm);
+                }
             }
         }
-        return null;
-    }*/
+        if (sourceId != 99){
+            for (FilmVo mtimeFilm : mtimeFilmList) {
+                if(sourceId != mtimeFilm.getFilmArea()){
+                    mtimeFilmList.remove(mtimeFilm);
+                }
+            }
+        }
+        if (yearId != 99){
+            for (FilmVo mtimeFilm : mtimeFilmList) {
+                if(yearId != mtimeFilm.getFilmDate()){
+                    mtimeFilmList.remove(mtimeFilm);
+                }
+            }
+        }
+
+        filmsVo.setStatus(0);
+        filmsVo.setNowPage(nowPage);
+        filmsVo.setData(mtimeFilmList);
+        filmsVo.setTotalPage(mtimeFilmList.size());
+        filmsVo.setImgPre("http://img.meetingshop.cn/");
+        return filmsVo;
+    }
+   //4、影片详情查询接口
+
+    @Override
+    public FilmInformationVo selsctFilmInformationVo(int searchType,String searchNameOrId) {
+        FilmInformationVo filmInformationVo = new FilmInformationVo();
+        DataFilmInformationVo dataFilmInformationVo = new DataFilmInformationVo();
+        ActorDirector actorDirector = new ActorDirector();
+        Director directorVo = new Director();
+        MtimeFilmT filmT = null;
+        if (searchType == 0) {
+            filmT = mtimeFilmTMapper.selectById(Integer.parseInt(searchNameOrId));
+        }
+        if(searchType == 1){
+            searchNameOrId = "%" + searchNameOrId + "%" ;
+            filmT = mtimeFilmTMapper.selectByName(searchNameOrId);
+        }
+        if (filmT != null ){
+            MtimeFilmInfoT mtimeFilmInfoT = mtimeFilmInfoTMapper.selectById(filmT.getUuid());
+            String filmCats = filmT.getFilmCats();
+            StringBuilder info01 = new StringBuilder();
+            String[] split = filmCats.split("#");
+            for (String catId : split) {
+                if (!"".equals(catId)) {
+                    MtimeCatDictT catDictT = mtimeCatDictTMapper.selectById(catId);
+                    info01.append(catDictT.getShowName());
+                }
+            }
+            dataFilmInformationVo.setInfo01(info01.toString());
+            MtimeSourceDictT sourceDictT = mtimeSourceDictTMapper.selectById(filmT.getFilmSource());
+            StringBuilder info02 = new StringBuilder();
+            info02.append(sourceDictT.getShowName()).append("/").append(mtimeFilmInfoT.getFilmLength()).append("分钟");
+            dataFilmInformationVo.setInfo02(info02.toString());
+            StringBuilder info03 = new StringBuilder();
+            info03.append(filmT.getFilmTime()).append(sourceDictT.getShowName()).append("上映");
+            dataFilmInformationVo.setInfo03(info03.toString());
+            List<Actors> actorsList = new ArrayList<>();
+            List<MtimeFilmActorT> filmActorT = mtimeFilmActorTMapper.selectListById(filmT.getUuid());
+            for (MtimeFilmActorT actorT : filmActorT) {
+                if (actorT.getActorId() == 1) {
+                    MtimeActorT director = mtimeActorTMapper.selectById(actorT.getActorId());
+                    directorVo.setDirectorName(director.getActorName());
+                    directorVo.setImgAddress(director.getActorImg());
+                } else {
+                    MtimeActorT actor = mtimeActorTMapper.selectById(actorT.getActorId());
+                    Actors actors = new Actors();
+                    actors.setDirectorName(actor.getActorName());
+                    actors.setRoleName(actorT.getRoleName());
+                    actors.setImgAddress(actor.getActorImg());
+                    actorsList.add(actors);
+                }
+            }
+            actorDirector.setDirector(directorVo);
+            actorDirector.setActors(actorsList);
+            String[] imags = mtimeFilmInfoT.getFilmImgs().split(",");
+            DataFilmInformationImgsVo imgsVo = new DataFilmInformationImgsVo();
+            imgsVo.setMainImg(imags[0]);
+            imgsVo.setImg01(imags[1]);
+            imgsVo.setImg02(imags[2]);
+            imgsVo.setImg03(imags[3]);
+            imgsVo.setImg04(imags[4]);
+            dataFilmInformationVo.setImgs(imgsVo);
+            filmInformationVo.setStatus(0);
+            filmInformationVo.setImgPre(filmT.getImgAddress());
+            filmInformationVo.setData(dataFilmInformationVo);
+            dataFilmInformationVo.setFilmEnName(mtimeFilmInfoT.getFilmEnName());
+            dataFilmInformationVo.setFilmId(filmT.getUuid());
+            dataFilmInformationVo.setFilmName(filmT.getFilmName());
+            dataFilmInformationVo.setImgAddress(filmT.getImgAddress());
+            dataFilmInformationVo.setScore(filmT.getFilmScore());
+            dataFilmInformationVo.setScoreNum(mtimeFilmInfoT.getFilmScoreNum().toString());
+            dataFilmInformationVo.setTotalBox(filmT.getFilmBoxOffice().toString());
+            InfoDataFilmInformationVo info04 = new InfoDataFilmInformationVo();
+            info04.setBiography(mtimeFilmInfoT.getBiography());
+            info04.setActors(actorDirector);
+            dataFilmInformationVo.setInfo04(info04);
+            filmInformationVo.setData(dataFilmInformationVo);
+            return filmInformationVo;
+        }else {
+            return null;
+        }
+    }
 }

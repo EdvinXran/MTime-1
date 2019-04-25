@@ -10,4 +10,11 @@
         <result column="role_name" property="roleName" />
     </resultMap>
 
+    <select id="selectListById" resultMap="BaseResultMap">
+        select
+        UUID,film_id,actor_id,role_name
+        from mtime_film_actor_t
+        where film_id =#{filmid}
+    </select>
+
 </mapper>

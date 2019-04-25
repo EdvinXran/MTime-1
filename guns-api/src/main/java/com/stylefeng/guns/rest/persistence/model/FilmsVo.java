@@ -13,7 +13,7 @@ public class FilmsVo implements Serializable {
 
     private int totalPage;
 
-    List<MtimeFilm> data;
+    List<FilmVo> data;
 
     public int getStatus() {
         return status;
@@ -47,11 +47,11 @@ public class FilmsVo implements Serializable {
         this.totalPage = totalPage;
     }
 
-    public List<MtimeFilm> getData() {
+    public List<FilmVo> getData() {
         return data;
     }
 
-    public void setData(List<MtimeFilm> data) {
+    public void setData(List<FilmVo> data) {
         this.data = data;
     }
 }

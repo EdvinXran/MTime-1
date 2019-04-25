@@ -53,15 +53,15 @@ public class MtimeFilm implements Serializable {
     /**
      * 影片分类，参照分类表,多个分类以#分割
      */
-    //private String filmCats;
+    private String filmCats;
     /**
      * 影片区域，参照区域表
      */
-    //private Integer filmArea;
+    private Integer filmArea;
     /**
      * 影片上映年代，参照年代表
      */
-    //private Integer filmDate;
+    private Integer filmDate;
     /**
      * 影片上映时间
      */
@@ -75,10 +75,35 @@ public class MtimeFilm implements Serializable {
         this.showTime = showTime;
     }
 
+    public String getFilmCats() {
+        return filmCats;
+    }
+
+    public void setFilmCats(String filmCats) {
+        this.filmCats = filmCats;
+    }
+
+    public Integer getFilmArea() {
+        return filmArea;
+    }
+
+    public void setFilmArea(Integer filmArea) {
+        this.filmArea = filmArea;
+    }
+
+    public Integer getFilmDate() {
+        return filmDate;
+    }
+
+    public void setFilmDate(Integer filmDate) {
+        this.filmDate = filmDate;
+    }
+
     /**
      * 影片状态,1-正在热映，2-即将上映，3-经典影片
      */
     //private Integer filmStatus;
+
 
 
 

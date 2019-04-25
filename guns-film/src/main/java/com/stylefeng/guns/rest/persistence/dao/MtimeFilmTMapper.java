@@ -1,6 +1,8 @@
 package com.stylefeng.guns.rest.persistence.dao;
 
-import com.stylefeng.guns.rest.model.FilmsGetVo;
+import com.stylefeng.guns.rest.persistence.model.FilmVo;
+import com.stylefeng.guns.rest.persistence.model.FilmsGetVo;
+import com.stylefeng.guns.rest.persistence.model.MtimeFilm;
 import com.stylefeng.guns.rest.persistence.model.MtimeFilmT;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
@@ -27,4 +29,12 @@ public interface MtimeFilmTMapper extends BaseMapper<MtimeFilmT> {
     List<MtimeFilmT> selectHomeTop100Films();
 
     List<MtimeFilmT> findFilms(FilmsGetVo filmsGetVo);
+
+    MtimeFilmT selectByName(String searchNameOrId);
+
+    List<FilmVo> selectHotFilmByShowType(int showType, int offset, int pageSize);
+
+    List<FilmVo> selectHotFilmByTime(int showType, int offset, int pageSize);
+
+    List<FilmVo> selectHotFilmByScore(int showType, int offset, int pageSize);
 }

@@ -1,3 +1,4 @@
+/*
 package com.stylefeng.guns.rest.modular.cinema;
 
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 
+*/
 /**
  * Created by Gavin
  * on 2019/4/22 17:18
- */
+ *//*
+
 @RestController
 @RequestMapping("/cinema")
 public class CinemaController {
@@ -120,3 +123,4 @@ public class CinemaController {
         return JSONObject.toJSONString(cinemaQueryVO);
     }
     }
+*/

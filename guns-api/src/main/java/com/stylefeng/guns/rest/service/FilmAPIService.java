@@ -21,7 +21,9 @@ public interface FilmAPIService {
 
     SeachConditionVo selectAllBySeachCondition(SeachCondition seachCondition);
 
-    //FilmsVo findFilms(FilmsGetVo filmsGetVo);
+    FilmInformationVo selsctFilmInformationVo(int searchType,String searchNameOrId);
+
+    FilmsVo findFilms(FilmsGetVo filmsGetVo);
 
     /*List<MtimeFilm> selectHomeHotFilms();
 

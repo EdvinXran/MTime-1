@@ -1,8 +1,5 @@
 package com.stylefeng.guns.rest.persistence.model;
 
-import com.stylefeng.guns.rest.persistence.model.MtimeBanner;
-import com.stylefeng.guns.rest.persistence.model.SoonFilmVo;
-
 import java.io.Serializable;
 import java.util.List;
 

@@ -1,7 +1,10 @@
 package com.stylefeng.guns.rest.persistence.dao;
 
+import com.stylefeng.guns.rest.persistence.model.Actors;
 import com.stylefeng.guns.rest.persistence.model.MtimeFilmActorT;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface MtimeFilmActorTMapper extends BaseMapper<MtimeFilmActorT> {
 
+    List<MtimeFilmActorT> selectListById(int searchType);
 }

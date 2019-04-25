@@ -69,12 +69,43 @@
         limit 0,10
     </select>
 
-    <!--<select id="findFilms" resultMap="BaseResultMap">
+    <select id="selectByName" resultMap="BaseResultMap">
         select
         <include refid="filmAll"/>
         from mtime_film_t
-        where film_status =#{filmsGetVo.showType}
+        where film_name like #{searchNameOrId}
+    </select>
 
-    </select>-->
+    <select id="selectHotFilmByShowType" resultMap="BaseResultMap">
+        select
+        <include refid="filmBy"/>
+        from mtime_film_t
+        where film_status =#{showType}
+        order by film_box_office desc
+        limit #{offset},#{pageSize}
+    </select>
+
+    <select id="selectHotFilmByTime" resultMap="BaseResultMap">
+        select
+        <include refid="filmBy"/>
+        from mtime_film_t
+        where film_status =#{showType}
+        order by film_time desc
+        limit #{offset},#{pageSize}
+    </select>
+
+    <select id="selectHotFilmByScore" resultMap="BaseResultMap">
+        select
+        <include refid="filmBy"/>
+        from mtime_film_t
+        where film_status =#{showType}
+        order by film_score desc
+        limit #{offset},#{pageSize}
+    </select>
+
+    <sql id="filmBy">
+        UUID as filmId,film_name as filmName,film_type as filmType,img_address as imgAddress,film_score as filmScore,
+        film_cats,film_area,film_date,film_time
+    </sql>
 
 </mapper>
