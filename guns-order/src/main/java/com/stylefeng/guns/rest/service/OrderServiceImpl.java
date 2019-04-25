@@ -1,13 +1,22 @@
 package com.stylefeng.guns.rest.service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.rest.modular.order.vo.OrderVO;
+import com.stylefeng.guns.rest.persistence.dao.MtimeOrderTMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Gavin
  * on 2019/4/25 10:41
  */
+@Component
+@Service(interfaceClass = OrderServiceAPI.class)
 public class OrderServiceImpl implements OrderServiceAPI {
+
+    @Autowired
+    MtimeOrderTMapper mtimeOrderTMapper;
 
     @Override
     public boolean isTrueSeats(String fieldId, String seats) {
