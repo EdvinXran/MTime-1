@@ -18,4 +18,18 @@ public class OrderVO implements Serializable {
     private String orderPrice;
     private String orderTimestamp;
     private String orderStatus;
+
+    public OrderVO() {
+    }
+
+    public OrderVO(String orderId, String filmName, String fieldTime, String cinemaName, String seatsName, String orderPrice, String orderTimestamp, String orderStatus) {
+        this.orderId = orderId;
+        this.filmName = filmName;
+        this.fieldTime = fieldTime;
+        this.cinemaName = cinemaName;
+        this.seatsName = seatsName;
+        this.orderPrice = orderPrice;
+        this.orderTimestamp = orderTimestamp;
+        this.orderStatus = orderStatus;
+    }
 }
