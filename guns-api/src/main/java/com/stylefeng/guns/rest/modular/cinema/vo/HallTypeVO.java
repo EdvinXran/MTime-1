@@ -1,11 +1,14 @@
 package com.stylefeng.guns.rest.modular.cinema.vo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * Created by Gavin
  * on 2019/4/23 11:04
  */
+@Data
 public class HallTypeVO implements Serializable {
     int halltypeId;
     String halltypeName;
@@ -36,20 +39,11 @@ public class HallTypeVO implements Serializable {
         this.halltypeName = halltypeName;
     }
 
-    public boolean isActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
-    }
-
-    @Override
-    public String toString() {
-        return "HallTypeVO{" +
-                "halltypeId=" + halltypeId +
-                ", halltypeName='" + halltypeName + '\'' +
-                ", isActive=" + isActive +
-                '}';
     }
 }

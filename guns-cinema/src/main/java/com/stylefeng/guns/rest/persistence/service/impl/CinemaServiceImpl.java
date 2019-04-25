@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -81,6 +82,20 @@ public class CinemaServiceImpl implements CinemaServiceAPI{
         if(brandId==99){
             //当条件为null时 代表select *
              brandList = mtimeBrandDictTMapper.selectList(null);
+//            for (MtimeBrandDictT mtimeBrandDictT : brandList) {
+//                //把99的那个先删除
+//                if(mtimeBrandDictT.getUuid()==99){
+//                    brandList.remove(mtimeBrandDictT);
+//                }
+//            }
+//            java.util.ConcurrentModificationException: null 迭代的时候不能去修改
+            Iterator<MtimeBrandDictT> iterator = brandList.iterator();
+            while(iterator.hasNext()){
+                MtimeBrandDictT mtimeBrandDictT = iterator.next();
+                if(mtimeBrandDictT.getUuid()==99){
+                    iterator.remove();
+                }
+            }
         }else {
             MtimeBrandDictT mtimeBrandDictT = mtimeBrandDictTMapper.selectById(brandId);
             brandList.add(mtimeBrandDictT);
@@ -90,7 +105,7 @@ public class CinemaServiceImpl implements CinemaServiceAPI{
         List<BrandVO> brandVOS = new ArrayList<>();
         if(brandId==99){
             BrandVO brandVO = new BrandVO();
-            brandVO.setActive(true);
+            brandVO.setIsActive(true);
             brandVO.setBrandId(99);
             brandVO.setBrandName("全部");
             brandVOS.add(brandVO);
@@ -99,7 +114,7 @@ public class CinemaServiceImpl implements CinemaServiceAPI{
             BrandVO brandVO = new BrandVO();
             brandVO.setBrandId(mtimeBrandDictT.getUuid());
             brandVO.setBrandName(mtimeBrandDictT.getShowName());
-            brandVO.setActive(false);
+            brandVO.setIsActive(false);
             brandVOS.add(brandVO);
         }
         return brandVOS;
@@ -110,6 +125,14 @@ public class CinemaServiceImpl implements CinemaServiceAPI{
         List<MtimeAreaDictT> areaList = new ArrayList<>();
         if(areaId==99){
             areaList = mtimeAreaDictTMapper.selectList(null);
+            //把99的那个先删除
+            Iterator<MtimeAreaDictT> iterator = areaList.iterator();
+            while(iterator.hasNext()){
+                MtimeAreaDictT mtimeAreaDictT = iterator.next();
+                if(mtimeAreaDictT.getUuid()==99){
+                    iterator.remove();
+                }
+            }
         }else {
             MtimeAreaDictT mtimeAreaDictT = mtimeAreaDictTMapper.selectById(areaId);
             areaList.add(mtimeAreaDictT);
@@ -135,6 +158,14 @@ public class CinemaServiceImpl implements CinemaServiceAPI{
         List<MtimeHallDictT> hallDictTList = new ArrayList<>();
         if(hallType==99){
             hallDictTList = mtimeHallDictTMapper.selectList(null);
+            //把99的那个先删除
+            Iterator<MtimeHallDictT> iterator = hallDictTList.iterator();
+            while(iterator.hasNext()){
+                MtimeHallDictT mtimeHallDictT = iterator.next();
+                if (mtimeHallDictT.getUuid()==99){
+                    iterator.remove();
+                }
+            }
         }else {
             MtimeHallDictT mtimeHallDictT = mtimeHallDictTMapper.selectById(hallType);
             hallDictTList.add(mtimeHallDictT);
@@ -192,12 +223,4 @@ public class CinemaServiceImpl implements CinemaServiceAPI{
         return filmInfoVO;
     }
 
-    //获取所有电影的信息和对应的放映场次信息，根据影院编号
-    @Override
-    public List<FilmInfoVO> getFilmInfoByCinemaId(int cinemaId) {
-
-        List<FilmInfoVO> filmInfos = mtimeFieldTMapper.getFilmInfos(cinemaId);
-
-        return filmInfos;
-    }
 }

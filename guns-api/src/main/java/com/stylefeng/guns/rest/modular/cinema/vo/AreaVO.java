@@ -1,5 +1,7 @@
 package com.stylefeng.guns.rest.modular.cinema.vo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -36,20 +38,11 @@ public class AreaVO implements Serializable {
         this.areaName = areaName;
     }
 
-    public boolean isActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
-    }
-
-    @Override
-    public String toString() {
-        return "AreaVO{" +
-                "areaId=" + areaId +
-                ", areaName='" + areaName + '\'' +
-                ", isActive=" + isActive +
-                '}';
     }
 }

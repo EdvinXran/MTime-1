@@ -71,21 +71,21 @@ public class CinemaController {
         if(cinemaConditionVO.getBrandId()==0){
             cinemaConditionVO.setBrandId(99);
         }
-        if(cinemaConditionVO.getDistrictId()==0){
-            cinemaConditionVO.setDistrictId(99);
-        }
-        if(cinemaConditionVO.getHallType()==0){
-            cinemaConditionVO.setHallType(99);
-        }
+//        if(cinemaConditionVO.getDistrictId()==0){
+//            cinemaConditionVO.setDistrictId(99);
+//        }
+//        if(cinemaConditionVO.getHallType()==0){
+//            cinemaConditionVO.setHallType(99);
+//        }
         //调用Service查询
         List<BrandVO> brands = cinemaService.getBrands(cinemaConditionVO.getBrandId());
         List<AreaVO> areas = cinemaService.getAreas(cinemaConditionVO.getDistrictId());
         List<HallTypeVO> hallTypes = cinemaService.getHallTypes(cinemaConditionVO.getHallType());
 
        //整理数据
-        responseMap.put("brands",brands);
-        responseMap.put("areas",areas);
-        responseMap.put("hallTypes",hallTypes);
+        responseMap.put("brandList",brands);
+        responseMap.put("areaList",areas);
+        responseMap.put("halltypeList",hallTypes);
         CinemaConditionResponseVO cinemaConditionResponseVO = new CinemaConditionResponseVO();
         cinemaConditionResponseVO.setData(responseMap);
         return JSONObject.toJSONString(cinemaConditionResponseVO);

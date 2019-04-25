@@ -1,12 +1,14 @@
 package com.stylefeng.guns.rest.modular.cinema.vo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * Created by Gavin
  * on 2019/4/23 11:04
  */
-
+@Data
 public class BrandVO implements Serializable {
     int brandId;
     String brandName;
@@ -37,20 +39,11 @@ public class BrandVO implements Serializable {
         this.brandName = brandName;
     }
 
-    public boolean isActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
-    }
-
-    @Override
-    public String toString() {
-        return "BrandVO{" +
-                "brandId=" + brandId +
-                ", brandName='" + brandName + '\'' +
-                ", isActive=" + isActive +
-                '}';
     }
 }
