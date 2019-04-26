@@ -72,7 +72,7 @@ public class UserController {
         return hashMap;
     }
 
-    @RequestMapping("logout")
+    @RequestMapping("/logout")
     @ResponseBody
     public Object logout(@RequestHeader("Authorization") String auth) {
         return UserVoEnum.LOGOUT_SERVICE_SUCCESS;
@@ -83,7 +83,7 @@ public class UserController {
      * @param auth
      * @return
      */
-    @RequestMapping(value = "getUserInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
     @ResponseBody
     public Object getUserInfo(@RequestHeader("Authorization") String auth) {
         String username = jwtTokenUtil.getUsernameFromToken(auth.substring(auth.indexOf(" ")));
@@ -102,7 +102,7 @@ public class UserController {
         return UserVoEnum.GETUSERINFO_SERVICE_SUCCESS.setData(user);
     }
 
-    @RequestMapping("updateUserInfo")
+    @RequestMapping("/updateUserInfo")
     @ResponseBody
     public Object updateUserInfo(@ModelAttribute UpdateUserVo updateUserVo) {
         if (updateUserVo == null)

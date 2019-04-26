@@ -16,7 +16,7 @@ public class FilmHomeController {
 
 
     //1、首页接口
-    @RequestMapping("/home")
+    @RequestMapping("/getIndex")
     @ResponseBody
     public Object mtimeFilmT(){
         FilmHomeVo filmHomeVo = filmAPIService.selectHomeFilm();

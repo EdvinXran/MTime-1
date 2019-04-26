@@ -8,12 +8,14 @@ import com.stylefeng.guns.rest.modular.auth.controller.dto.AuthResponse;
 import com.stylefeng.guns.rest.modular.auth.util.JwtTokenUtil;
 import com.stylefeng.guns.rest.modular.auth.validator.IReqValidator;
 import com.stylefeng.guns.rest.service.UserService;
+import com.stylefeng.guns.rest.utils.JedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -57,6 +59,9 @@ public class AuthController {
             Integer uid = userService.auth(userName, password);
             if(uid != null) {
                 HashMap token = userService.gstToken(userName);
+                Jedis jedis = JedisUtils.getJedisFromPool();
+                jedis.set(userName,token.get("token").toString());
+                jedis.expire(userName,120);
                 hashMap.put("data", token);
                 hashMap.put("status", 0);
             }else{
