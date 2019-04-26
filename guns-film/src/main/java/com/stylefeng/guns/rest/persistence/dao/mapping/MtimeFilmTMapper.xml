@@ -76,7 +76,7 @@
         where film_name like #{searchNameOrId}
     </select>
 
-    <select id="selectHotFilmByShowType" resultMap="BaseResultMap">
+    <select id="selectHotFilmByShowType" resultType="com.stylefeng.guns.rest.persistence.model.FilmVo">
         select
         <include refid="filmBy"/>
         from mtime_film_t
@@ -85,7 +85,7 @@
         limit #{offset},#{pageSize}
     </select>
 
-    <select id="selectHotFilmByTime" resultMap="BaseResultMap">
+    <select id="selectHotFilmByTime" resultType="com.stylefeng.guns.rest.persistence.model.FilmVo">
         select
         <include refid="filmBy"/>
         from mtime_film_t
@@ -94,7 +94,7 @@
         limit #{offset},#{pageSize}
     </select>
 
-    <select id="selectHotFilmByScore" resultMap="BaseResultMap">
+    <select id="selectHotFilmByScore" resultType="com.stylefeng.guns.rest.persistence.model.FilmVo">
         select
         <include refid="filmBy"/>
         from mtime_film_t
@@ -105,7 +105,7 @@
 
     <sql id="filmBy">
         UUID as filmId,film_name as filmName,film_type as filmType,img_address as imgAddress,film_score as filmScore,
-        film_cats,film_area,film_date,film_time
+        film_cats as filmCats,film_area as filmArea,film_date as filmDate,film_time
     </sql>
 
 </mapper>

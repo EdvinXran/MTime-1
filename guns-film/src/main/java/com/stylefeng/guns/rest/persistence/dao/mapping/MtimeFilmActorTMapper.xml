@@ -14,7 +14,7 @@
         select
         UUID,film_id,actor_id,role_name
         from mtime_film_actor_t
-        where film_id =#{filmid}
+        where film_id =#{searchType}
     </select>
 
 </mapper>

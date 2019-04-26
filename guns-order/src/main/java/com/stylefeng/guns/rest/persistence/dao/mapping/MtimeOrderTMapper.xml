@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.stylefeng.guns.rest.persistence.dao.MtimeOrderTMapper">
+<mapper namespace="com.stylefeng.guns.rest.common.persistence.dao.MtimeOrderTMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.persistence.model.MtimeOrderT">
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.common.persistence.model.MtimeOrderT">
         <result column="UUID" property="uuid" />
         <result column="cinema_id" property="cinemaId" />
         <result column="field_id" property="fieldId" />
@@ -17,4 +17,15 @@
         <result column="order_status" property="orderStatus" />
     </resultMap>
 
+    <select id="getSoldSeatsByFieldId"  resultType="java.lang.String">
+        SELECT GROUP_CONCAT(seats_ids) FROM mtime_order_t where field_id=#{fieldId}
+    </select>
+
+    <select id="getSeatsByFiledId" resultType="String">
+        select
+        seat_address as seatAddress
+        from mtime_hall_dict_t h, mtime_field_t f
+        where h.UUID = f.hall_id
+        and f.UUID = #{filedId}
+    </select>
 </mapper>

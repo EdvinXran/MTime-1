@@ -1,11 +1,10 @@
 package com.stylefeng.guns.rest.persistence.dao;
 
-import com.stylefeng.guns.rest.modular.cinema.vo.FilmInfoVO;
-import com.stylefeng.guns.rest.modular.cinema.vo.HallInfoVO;
+import com.stylefeng.guns.rest.persistence.model.FilmInfoVO;
+import com.stylefeng.guns.rest.persistence.model.HallInfoVO;
 import com.stylefeng.guns.rest.persistence.model.MtimeFieldT;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

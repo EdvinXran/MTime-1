@@ -1,5 +1,6 @@
 package com.stylefeng.guns.rest.persistence.model;
 
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -15,6 +16,7 @@ import java.io.Serializable;
  * @author wxy
  * @since 2019-04-22
  */
+@TableName("mtime_user")
 public class MyUser extends Model<MyUser> {
 
     private static final long serialVersionUID = 1L;

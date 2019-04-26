@@ -9,20 +9,20 @@ import com.stylefeng.guns.rest.modular.order.vo.OrderVO;
  */
 public interface OrderServiceAPI {
     // 验证售出的票是否为真
-    boolean isTrueSeats(String fieldId, String seats);
+    boolean isTrueSeats(String fieldId, String seats) throws Exception;
 
     // 已经销售的座位里，有没有这些座位
-    boolean isNotSoldSeats(String fieldId, String seats);
+    boolean isNotSoldSeats(String fieldId, String seats) throws Exception;
 
     // 创建订单信息
-    OrderVO saveOrderInfo(Integer fieldId, String soldSeats, String seatsName, Integer userId);
+    OrderVO saveOrderInfo(Integer fieldId, String soldSeats, String seatsName, Integer userId) throws Exception;
 
     // 使用当前登陆人获取已经购买的订单
-    Page<OrderVO> getOrderByUserId(Integer userId, Page<OrderVO> page);
+    Page<OrderVO> getOrderByUserId(Integer userId, Page<OrderVO> page) throws Exception;
 
     // 根据FieldId 获取所有已经销售的座位编号
-    String getSoldSeatsByFieldId(Integer fieldId);
+    String getSoldSeatsByFieldId(Integer fieldId) throws Exception;
 
     // 根据订单编号获取订单信息
-    OrderVO getOrderInfoById(String orderId);
+    OrderVO getOrderInfoById(String orderId) throws Exception;
 }

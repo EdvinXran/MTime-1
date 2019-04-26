@@ -14,6 +14,7 @@ public class FilmVo implements Serializable {
 
     private String filmScore;
 
+
     /**
      * 影片分类，参照分类表,多个分类以#分割
      */

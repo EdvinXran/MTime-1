@@ -22,17 +22,17 @@ public class DataFilmInformationVo implements Serializable {
 
     private String info03;
 
-    private DataFilmInformationImgsVo imgs;
+    private DataFilmInformationImgsVo imgVO;
 
     private int filmId;
 
 
     public DataFilmInformationImgsVo getImgs() {
-        return imgs;
+        return imgVO;
     }
 
-    public void setImgs(DataFilmInformationImgsVo imgs) {
-        this.imgs = imgs;
+    public void setImgs(DataFilmInformationImgsVo imgVO) {
+        this.imgVO = imgVO;
     }
 
     public int getFilmId() {

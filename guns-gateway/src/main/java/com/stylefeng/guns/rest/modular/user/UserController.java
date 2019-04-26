@@ -1,15 +1,15 @@
-/*
 package com.stylefeng.guns.rest.modular.user;
 
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.stylefeng.guns.rest.persistence.model.UserBo;
+import com.stylefeng.guns.rest.modular.auth.util.JwtTokenUtil;
+import com.stylefeng.guns.rest.persistence.model.*;
 import com.stylefeng.guns.rest.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -19,6 +19,9 @@ public class UserController {
 
     @Reference
     UserService userService;
+
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
 
     @RequestMapping(value = "/register",method = {RequestMethod.POST})
     @ResponseBody
@@ -69,27 +72,59 @@ public class UserController {
         return hashMap;
     }
 
-    @RequestMapping(value = "/auth",method = {RequestMethod.POST})
+    @RequestMapping("logout")
     @ResponseBody
-    public HashMap auth(String username,String password){
-        HashMap hashMap = new HashMap();
+    public Object logout(@RequestHeader("Authorization") String auth) {
+        return UserVoEnum.LOGOUT_SERVICE_SUCCESS;
+    }
+
+    /**
+     *  userInfo
+     * @param auth
+     * @return
+     */
+    @RequestMapping(value = "getUserInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getUserInfo(@RequestHeader("Authorization") String auth) {
+        String username = jwtTokenUtil.getUsernameFromToken(auth.substring(auth.indexOf(" ")));
+        UserInfoVo user = null;
         try {
-            boolean auth = userService.auth(username, password);
-            if(auth) {
-                HashMap token = userService.gstToken(username);
-                hashMap.put("date", token);
-                hashMap.put("status", 0);
-            }else{
-                hashMap.put("msg", "用户名或密码错误");
-                hashMap.put("status", 1);
-            }
+            user = userService.selectByUserName(username);
         } catch (Exception e) {
-            hashMap.put("msg", "系统出现异常，请联系管理员");
-            hashMap.put("status", 999);
             e.printStackTrace();
         }
-        return hashMap;
+        if (user == null) {
+            return UserVoEnum.GETUSERINFO_SERVICE_EXCEPTION;
+        }
+        /**
+         * 枚举 UserVoEnum 用法见定义
+         */
+        return UserVoEnum.GETUSERINFO_SERVICE_SUCCESS.setData(user);
     }
+
+    @RequestMapping("updateUserInfo")
+    @ResponseBody
+    public Object updateUserInfo(@ModelAttribute UpdateUserVo updateUserVo) {
+        if (updateUserVo == null)
+            return null;
+        updateUserVo.setUpdateTime(new Date());
+        boolean b = false;
+        try {
+            b = userService.updatePartialById(updateUserVo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!b) {
+            return UserVoEnum.UPDATEUSERINFO_SERVICE_EXCEPTION;
+        }
+        UserInfoVo UserVo = null;
+        try {
+            UserVo = userService.selectByUserNameUpdate(updateUserVo.getUsername());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return UserVoEnum.UPDATEUSERINFO_SERVICE_SUCCESS.setData(UserVo);
+    }
+
 }
 
-*/

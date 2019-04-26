@@ -4,20 +4,62 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.persistence.model.MyUser">
-        <id column="UUID" property="uuid" />
-        <result column="user_name" property="userName" />
-        <result column="user_pwd" property="userPwd" />
-        <result column="nick_name" property="nickName" />
-        <result column="user_sex" property="userSex" />
-        <result column="birthday" property="birthday" />
-        <result column="email" property="email" />
-        <result column="user_phone" property="userPhone" />
-        <result column="address" property="address" />
-        <result column="head_url" property="headUrl" />
-        <result column="biography" property="biography" />
-        <result column="life_state" property="lifeState" />
-        <result column="begin_time" property="beginTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="UUID" property="uuid"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_pwd" property="userPwd"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="user_sex" property="userSex"/>
+        <result column="birthday" property="birthday"/>
+        <result column="email" property="email"/>
+        <result column="user_phone" property="userPhone"/>
+        <result column="address" property="address"/>
+        <result column="head_url" property="headUrl"/>
+        <result column="biography" property="biography"/>
+        <result column="life_state" property="lifeState"/>
+        <result column="begin_time" property="beginTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
-
+    <resultMap id="InfoResultMap" type="com.stylefeng.guns.rest.persistence.model.UserInfoVo">
+        <id column="UUID" property="uuid"/>
+        <result column="user_name" property="username"/>
+        <result column="nick_name" property="nickname"/>
+        <result column="user_sex" property="sex"/>
+        <result column="birthday" property="birthday"/>
+        <result column="email" property="email"/>
+        <result column="user_phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="head_url" property="headAddress"/>
+        <result column="biography" property="biography"/>
+        <result column="life_state" property="lifeState"/>
+        <result column="begin_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <select id="selectByUserName" parameterType="java.lang.String" resultMap="InfoResultMap">
+    select UUID,user_sex,nick_name,birthday,email,user_phone,address,biography,life_state,begin_time,update_time,head_url,user_name
+        from mtime_user_t
+        where user_name=#{userName,jdbcType=VARCHAR}
+</select>
+    <resultMap id="UpdateResultMap" type="com.stylefeng.guns.rest.persistence.model.UserInfoVo">
+        <id column="UUID" property="uuid"/>
+        <result column="user_name" property="username"/>
+        <result column="nick_name" property="nickname"/>
+        <result column="user_sex" property="sex"/>
+        <result column="birthday" property="birthday"/>
+        <result column="email" property="email"/>
+        <result column="user_phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="head_url" property="headAddress"/>
+        <result column="biography" property="biography"/>
+        <result column="life_state" property="lifeState"/>
+        <result column="begin_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <select id="selectByUserNameUpdate" parameterType="java.lang.String" resultMap="UpdateResultMap">
+        select UUID,user_sex,nick_name,birthday,email,user_phone,address,biography,life_state,begin_time,update_time,head_url,user_name
+        from mtime_user_t
+        where user_name=#{userName,jdbcType=VARCHAR}
+    </select>
+    <update id="updatePartialByID" parameterType="com.stylefeng.guns.rest.persistence.model.UpdateUserVo">
+        update mtime_user_t set nick_name = #{nickname},user_sex = #{sex},head_url = #{headAddress},biography = #{biography},life_state = #{lifeState},update_time = #{updateTime} where UUID = #{uuid}
+    </update>
 </mapper>

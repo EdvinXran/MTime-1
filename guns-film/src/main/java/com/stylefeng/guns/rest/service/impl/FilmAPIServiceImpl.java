@@ -288,12 +288,15 @@ public class FilmAPIServiceImpl implements FilmAPIService {
                 String[] split = mtimeFilm.getFilmCats().split("#");
                 int fale = 0;
                 for (String s : split) {
-                    if (catId == Integer.parseInt(s)){
-                        fale = 1;
+                    if (!"".equals(s)) {
+                        if (catId == Integer.parseInt(s)) {
+                            fale = 1;
+                        }
                     }
                 }
                 if (fale == 0){
                     mtimeFilmList.remove(mtimeFilm);
+                    break;
                 }
             }
         }
@@ -301,6 +304,7 @@ public class FilmAPIServiceImpl implements FilmAPIService {
             for (FilmVo mtimeFilm : mtimeFilmList) {
                 if(sourceId != mtimeFilm.getFilmArea()){
                     mtimeFilmList.remove(mtimeFilm);
+                    break;
                 }
             }
         }
@@ -308,6 +312,7 @@ public class FilmAPIServiceImpl implements FilmAPIService {
             for (FilmVo mtimeFilm : mtimeFilmList) {
                 if(yearId != mtimeFilm.getFilmDate()){
                     mtimeFilmList.remove(mtimeFilm);
+                    break;
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.stylefeng.guns.rest.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.rest.modular.order.vo.OrderVO;
@@ -8,15 +9,15 @@ import com.stylefeng.guns.rest.persistence.dao.MtimeCinemaTMapper;
 import com.stylefeng.guns.rest.persistence.dao.MtimeFieldTMapper;
 import com.stylefeng.guns.rest.persistence.dao.MtimeHallFilmInfoTMapper;
 import com.stylefeng.guns.rest.persistence.dao.MtimeOrderTMapper;
-import com.stylefeng.guns.rest.persistence.model.MtimeCinemaT;
-import com.stylefeng.guns.rest.persistence.model.MtimeFieldT;
-import com.stylefeng.guns.rest.persistence.model.MtimeHallFilmInfoT;
-import com.stylefeng.guns.rest.persistence.model.MtimeOrderT;
+import com.stylefeng.guns.rest.persistence.model.*;
+import com.stylefeng.guns.rest.util.ReadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Gavin
@@ -28,31 +29,104 @@ public class OrderServiceImpl implements OrderServiceAPI {
 
     @Autowired
     MtimeOrderTMapper mtimeOrderTMapper;
+
     @Autowired
     MtimeHallFilmInfoTMapper mtimeHallFilmInfoTMapper;
+
     @Autowired
     MtimeFieldTMapper mtimeFieldTMapper;
+
     @Autowired
     MtimeCinemaTMapper mtimeCinemaTMapper;
 
 
     @Override
-    public boolean isTrueSeats(String fieldId, String seats) {
-        return false;
+    public boolean isTrueSeats(String fieldId, String seats) throws Exception{
+        //订单里的位置信息
+        String seatPath = mtimeOrderTMapper.getSeatsByFiledId(fieldId);
+        //影厅的位置信息
+        String readFile = ReadUtil.readFile(seatPath);
+        JSONObject jsonObject = JSONObject.parseObject(readFile);
+        String ids = jsonObject.get("ids").toString();
+
+        String[] seatArrs = seats.split(",");
+        String[] idArrs = ids.split(",");
+        int num = 0;
+        //匹配上一次，num+1
+        for (String id : idArrs) {
+            for (String seat : seatArrs) {
+                if (seat.equals(id)) {
+                    num++;
+                }
+            }
+        }
+        // 如果匹配上的数量与已售座位数一致，则表示全都匹配上了
+        if (seatArrs.length == num) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public boolean isNotSoldSeats(String fieldId, String seats) {
-        return false;
+    public boolean isNotSoldSeats(String fieldId, String seats) throws Exception{
+        EntityWrapper entityWrapper = new EntityWrapper();
+        entityWrapper.eq("filed_id", fieldId);
+
+        List<MtimeOrderT> list = mtimeOrderTMapper.selectList(entityWrapper);
+        String[] seatsArr = seats.split(",");
+        for (MtimeOrderT mtimeOrderT : list) {
+            String[] ids = mtimeOrderT.getSeatsIds().split(",");
+            for (String id : ids) {
+                for (String s : seatsArr) {
+                    if(id.equals(s)){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     @Override
-    public OrderVO saveOrderInfo(Integer fieldId, String soldSeats, String seatsName, Integer userId) {
-        return null;
+    public OrderVO saveOrderInfo(Integer fieldId, String soldSeats, String seatsName, Integer userId) throws Exception{
+        FieldInfo fieldInfoById = mtimeFieldTMapper.getFieldInfoById(fieldId);
+        OrderInsertVo orderInsertVo = new OrderInsertVo();
+        String orderId = UUID.randomUUID().toString();
+        orderInsertVo.setOrderId(orderId);
+        orderInsertVo.setCinemaId(fieldInfoById.getCinemaId());
+        orderInsertVo.setFieldId(fieldId);
+        orderInsertVo.setFilmId(fieldInfoById.getFilmId());
+        orderInsertVo.setSeatsIds(soldSeats);
+        orderInsertVo.setSeatsName(seatsName);
+        orderInsertVo.setFilmPrice(fieldInfoById.getPrice());
+        String[] split = soldSeats.split(",");
+        orderInsertVo.setOrderPrice(split.length * fieldInfoById.getPrice());
+        Date orderTime = new Date();
+        orderInsertVo.setOrderTime(orderTime);
+        orderInsertVo.setOrderUserId(userId);
+        orderInsertVo.setOrderStatus(0);
+        int insertRet = mtimeOrderTMapper.saveOrderInfo(orderInsertVo);
+        String cinemaNameById = mtimeCinemaTMapper.selectCinemaNameById(fieldInfoById.getCinemaId());
+        String filmNameById = mtimeFieldTMapper.getFilmNameById(fieldInfoById.getFilmId());
+        if(insertRet == 1) {
+            OrderVO orderVO = new OrderVO();
+            orderVO.setOrderId(orderId);
+            orderVO.setFilmName(filmNameById);
+            orderVO.setFieldTime(fieldInfoById.getBeginTime().toString());
+            orderVO.setCinemaName(cinemaNameById);
+            orderVO.setSeatsName(seatsName);
+            orderVO.setOrderPrice(Integer.toString(split.length * fieldInfoById.getPrice()));
+            orderVO.setOrderTimestamp(orderTime.toString());
+            orderVO.setOrderStatus(Integer.toString(0));
+            return orderVO;
+        }else {
+            return null;
+        }
     }
 
     @Override
-    public Page<OrderVO> getOrderByUserId(Integer userId, Page<OrderVO> page) {
+    public Page<OrderVO> getOrderByUserId(Integer userId, Page<OrderVO> page) throws Exception{
         Page<OrderVO> voPage = new Page<>(page.getCurrent(),page.getSize());
         ArrayList<OrderVO> list = new ArrayList<>();
         EntityWrapper<MtimeOrderT> wrapper = new EntityWrapper<>();
@@ -76,12 +150,13 @@ public class OrderServiceImpl implements OrderServiceAPI {
     }
 
     @Override
-    public String getSoldSeatsByFieldId(Integer fieldId) {
-        return null;
+    public String getSoldSeatsByFieldId(Integer fieldId) throws Exception{
+        String soldSeatsByFieldId = mtimeOrderTMapper.getSoldSeatsByFieldId(fieldId);
+        return soldSeatsByFieldId;
     }
 
     @Override
-    public OrderVO getOrderInfoById(String orderId) {
+    public OrderVO getOrderInfoById(String orderId) throws Exception{
         return null;
     }
 }
