@@ -1,4 +1,4 @@
-package com.stylefeng.guns.rest.modular.order.vo;
+package com.stylefeng.guns.rest.persistence.model;
 
 import lombok.Data;
 

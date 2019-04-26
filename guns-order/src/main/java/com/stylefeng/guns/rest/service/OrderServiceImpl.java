@@ -4,7 +4,6 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.stylefeng.guns.rest.modular.order.vo.OrderVO;
 import com.stylefeng.guns.rest.persistence.dao.MtimeCinemaTMapper;
 import com.stylefeng.guns.rest.persistence.dao.MtimeFieldTMapper;
 import com.stylefeng.guns.rest.persistence.dao.MtimeHallFilmInfoTMapper;
@@ -125,12 +124,14 @@ public class OrderServiceImpl implements OrderServiceAPI {
         }
     }
 
+    // order_status  0是未支付 1是已支付 2是已关闭
     @Override
     public Page<OrderVO> getOrderByUserId(Integer userId, Page<OrderVO> page) throws Exception{
         Page<OrderVO> voPage = new Page<>(page.getCurrent(),page.getSize());
         ArrayList<OrderVO> list = new ArrayList<>();
         EntityWrapper<MtimeOrderT> wrapper = new EntityWrapper<>();
         wrapper.eq("user_id",userId);
+        wrapper.eq("order_status",1);
         List<MtimeOrderT> mtimeOrderTS = mtimeOrderTMapper.selectPage(voPage, wrapper);
         for (MtimeOrderT mtimeOrderT : mtimeOrderTS) {
             Integer filmId = mtimeOrderT.getFilmId();
@@ -157,6 +158,21 @@ public class OrderServiceImpl implements OrderServiceAPI {
 
     @Override
     public OrderVO getOrderInfoById(String orderId) throws Exception{
-        return null;
+        MtimeOrderT mtimeOrderT = mtimeOrderTMapper.selectById(orderId);
+        //查找其他参数
+        Integer filmId = mtimeOrderT.getFilmId();
+        Integer cinemaId = mtimeOrderT.getCinemaId();
+        MtimeHallFilmInfoT filmInfo = mtimeHallFilmInfoTMapper.selectById(filmId);
+        MtimeCinemaT mtimeCinemaT = mtimeCinemaTMapper.selectById(cinemaId);
+        EntityWrapper<MtimeFieldT> fieldTEntityWrapper = new EntityWrapper<>();
+        fieldTEntityWrapper.eq("film_id",filmId);
+        fieldTEntityWrapper.eq("cinema_id",cinemaId);
+        List<MtimeFieldT> mtimeFieldTS = mtimeFieldTMapper.selectList(fieldTEntityWrapper);
+        MtimeFieldT mtimeFieldT = mtimeFieldTS.get(0);
+        OrderVO orderVO = new OrderVO(mtimeOrderT.getUuid(), filmInfo.getFilmName(), "今天," + mtimeFieldT.getBeginTime(), mtimeCinemaT.getCinemaName(), mtimeOrderT.getSeatsName(), mtimeOrderT.getOrderPrice() + "", mtimeOrderT.getOrderTime() + "", mtimeOrderT.getOrderStatus() + "");
+        return orderVO;
     }
+
+
+
 }

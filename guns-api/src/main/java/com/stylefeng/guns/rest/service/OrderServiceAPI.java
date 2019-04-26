@@ -1,7 +1,8 @@
 package com.stylefeng.guns.rest.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.stylefeng.guns.rest.modular.order.vo.OrderVO;
+import com.stylefeng.guns.rest.persistence.model.Actors;
+import com.stylefeng.guns.rest.persistence.model.OrderVO;
 
 /**
  * Created by Gavin
@@ -25,4 +26,9 @@ public interface OrderServiceAPI {
 
     // 根据订单编号获取订单信息
     OrderVO getOrderInfoById(String orderId) throws Exception;
+
+    // 支付成功
+    void paySuccess(int orderId);
+    // 支付失败
+    void payFailed(int orderId);
 }

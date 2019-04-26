@@ -1,7 +1,6 @@
 package com.stylefeng.guns.rest.modular.cinema;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.rest.persistence.model.*;
 import com.stylefeng.guns.rest.service.CinemaServiceAPI;
@@ -93,7 +92,7 @@ public class CinemaController {
     }
 
     @RequestMapping(value = "/getFields",method = RequestMethod.GET)
-    public String getFields(Integer cinemaId){
+    public CinemaConditionVO getFields(Integer cinemaId){
 
 
             CinemaInfoVO cinemaInfoById = cinemaService.getCinemaInfoById(cinemaId);
@@ -102,12 +101,12 @@ public class CinemaController {
             CinemaConditionVO cinemaConditionVO = new CinemaConditionVO();
             cinemaConditionVO.setCinemaInfo(cinemaInfoById);
             cinemaConditionVO.setFilmList(filmInfoByCinemaId);
-            return JSONObject.toJSONString(cinemaConditionVO);
+            return cinemaConditionVO;
 
 
     }
     @RequestMapping(value = "/getFieldInfo",method = RequestMethod.POST)
-    public String getFieldInfo(Integer cinemaId, Integer fieldId) {
+    public CinemaQueryVO getFieldInfo(Integer cinemaId, Integer fieldId) {
 
         CinemaInfoVO cinemaInfoById = cinemaService.getCinemaInfoById(cinemaId);
         FilmInfoVO filmInfoByFieldId = cinemaService.getFilmInfoByFieldId(fieldId);
@@ -118,6 +117,6 @@ public class CinemaController {
         cinemaQueryVO.setCinemaInfo(cinemaInfoById);
         cinemaQueryVO.setFilmInfo(filmInfoByFieldId);
         cinemaQueryVO.setHallInfo(filmFieldInfo);
-        return JSONObject.toJSONString(cinemaQueryVO);
+        return cinemaQueryVO;
     }
     }

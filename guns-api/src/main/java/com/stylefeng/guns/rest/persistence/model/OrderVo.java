@@ -1,9 +1,15 @@
 package com.stylefeng.guns.rest.persistence.model;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
-public class OrderVo implements Serializable {
-
+/**
+ * Created by Gavin
+ * on 2019/4/25 10:24
+ */
+@Data
+public class OrderVO implements Serializable {
     private String orderId;
     private String filmName;
     private String fieldTime;
@@ -13,81 +19,17 @@ public class OrderVo implements Serializable {
     private String orderTimestamp;
     private String orderStatus;
 
-    public String getOrderId() {
-        return orderId;
+    public OrderVO() {
     }
 
-    public void setOrderId(String orderId) {
+    public OrderVO(String orderId, String filmName, String fieldTime, String cinemaName, String seatsName, String orderPrice, String orderTimestamp, String orderStatus) {
         this.orderId = orderId;
-    }
-
-    public String getFilmName() {
-        return filmName;
-    }
-
-    public void setFilmName(String filmName) {
         this.filmName = filmName;
-    }
-
-    public String getFieldTime() {
-        return fieldTime;
-    }
-
-    public void setFieldTime(String fieldTime) {
         this.fieldTime = fieldTime;
-    }
-
-    public String getCinemaName() {
-        return cinemaName;
-    }
-
-    public void setCinemaName(String cinemaName) {
         this.cinemaName = cinemaName;
-    }
-
-    public String getSeatsName() {
-        return seatsName;
-    }
-
-    public void setSeatsName(String seatsName) {
         this.seatsName = seatsName;
-    }
-
-    public String getOrderPrice() {
-        return orderPrice;
-    }
-
-    public void setOrderPrice(String orderPrice) {
         this.orderPrice = orderPrice;
-    }
-
-    public String getOrderTimestamp() {
-        return orderTimestamp;
-    }
-
-    public void setOrderTimestamp(String orderTimestamp) {
         this.orderTimestamp = orderTimestamp;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderVo{" +
-                "orderId='" + orderId + '\'' +
-                ", filmName='" + filmName + '\'' +
-                ", fieldTime='" + fieldTime + '\'' +
-                ", cinemaName='" + cinemaName + '\'' +
-                ", seatsName='" + seatsName + '\'' +
-                ", orderPrice='" + orderPrice + '\'' +
-                ", orderTimestamp='" + orderTimestamp + '\'' +
-                ", orderStatus='" + orderStatus + '\'' +
-                '}';
     }
 }

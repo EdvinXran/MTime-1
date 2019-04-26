@@ -1,5 +1,7 @@
 package com.stylefeng.guns.rest.persistence.model;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 public class Actors implements Serializable {
@@ -33,4 +35,6 @@ public class Actors implements Serializable {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+
+
 }
